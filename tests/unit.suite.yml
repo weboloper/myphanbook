@@ -1,0 +1,11 @@
+# Codeception Test Suite Configuration
+
+# suite for unit (internal) tests.
+class_name: UnitTester
+modules:
+    enabled:
+        - Helper\Unit
+        - Filesystem
+        - Asserts
+        - Phalcon
+        - App\Test\Module\Db
