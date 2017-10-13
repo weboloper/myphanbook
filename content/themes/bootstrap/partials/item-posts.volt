@@ -21,7 +21,7 @@
             {% else %}
                 <span class="question-answered"><i class="fa fa-check"></i>{{ t('in progress') }}</span>
             {% endif %}
-            <span class="question-favorite iam-subscribe" data-object-id="{{ post.id }}">
+            <span class="question-favorite favorite-btn" data-object-id="{{ post.id }}">
                 <i class="fa fa-heart"></i>{{ post.postFavorite() }}
             </span>
         </div>

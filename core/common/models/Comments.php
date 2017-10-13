@@ -390,7 +390,7 @@ class Comments extends ModelBase
             /**
              * Register users subscribed to the post
              */
-            foreach (PostsFavorites::findByPostsId($this->postsId) as $subscriber) {
+            foreach (Favorite::findByPostsId($this->postsId) as $subscriber) {
                 if (!isset($toNotify[$subscriber->getUsersId()])) {
                     $notificationId = $this->setNotification(
                         $subscriber->getUsersId(),

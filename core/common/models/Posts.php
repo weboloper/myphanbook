@@ -653,7 +653,7 @@ class Posts extends ModelBase
 
         $this->hasMany('id', PostsViews::class, 'postsId', ['alias' => 'postview']);
         $this->hasMany('id', Comments::class, 'postsId', ['alias' => 'comments']);
-        $this->hasMany('id', PostsFavorites::class, 'postsId', ['alias' => 'postFavoriter']);
+        $this->hasMany('id', Favorite::class, 'postsId', ['alias' => 'postFavoriter']);
 
         $this->hasManyToMany('id', PostsTags::class, 'postsId', 'tagsId', Tags::class, 'id', ['alias' => 'tag']);
 

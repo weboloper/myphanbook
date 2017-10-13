@@ -21,7 +21,7 @@
     {{ assets.outputCss('theme_css') }}
 
     <!-- Responsive Style -->
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    {{ stylesheet_link('/core/assets/css/font-awesome.min.css?v=2') }}
 
     {{ this.assets.outputCss() }}
     <script type="text/javascript">
@@ -52,7 +52,7 @@
 
 <!-- js -->
 {{ javascript_include('core/assets/js/jquery.js')}}
-{{ javascript_include('core/assets/js/notify.js')}}
+{{ javascript_include('core/assets/js/bootstrap-notify.js')}}
 {{ javascript_include('core/assets/js/app.function.js')}}
 {{ javascript_include('core/assets/js/app.ajax.js')}}
 {{ javascript_include('core/assets/js/app.js')}}

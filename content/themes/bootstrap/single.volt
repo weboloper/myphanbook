@@ -105,14 +105,7 @@
                                     </div>
                                     {# Add class js for ajax#}
                                     <div>
-                                    {% if post.usersId == this.session.auth['id'] %}
-                                        {% if comment.accepted == "Y"%}
-                                            <a  href="#" class="question-answered question-answered-done"> <i class="fa fa-check"></i>Best Answer</a>
-                                        {% else %}
-                                            <a href="#" class="iam-accepting" data-object-id="{{ comment.id }}" title="Click to accept this comment because it solved your problem or was the most helpful in finding your solution">
-                                            <i class="fa fa-check"></i></a>
-                                        {% endif %}
-                                    {% endif %}
+                                
                                     </div>
                                 </div>
                             </div>

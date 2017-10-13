@@ -56,38 +56,13 @@ $('body').on('click', '.voter', function (event) {
     });
 });
 
-//accepting post
-$('body').on('click' ,'.iam-accepting' , function (event){
-    event.preventDefault();
-    currentElement = $(this);
-    var csrf = $(this).parent().parent().parent().parent().children(".col-md-10").children(".comment-form").children(".csrf").val()
-    $.ajax({
-        type: "POST",
-        url: baseUri + 'replies/accept',
-        dataType: 'json',
-        data: {
-            'objectId': $(this).data('objectId'),
-        },
-        //@Todo unaccepted
-        success: function (data) {
-            if (data.data == 1) {
-                $('.iam-accepting').addClass('vote-accepted-on');
-            }
-        },
-        error: function( xhr, status ) {
-        },
-        complete: function( xhr, status ) {
-        }
-    });
-
-})
 //subscribe or unsubscribe a posts
-$('body').on('click', '.iam-subscribe', function (event){
+$('body').on('click', '.favorite-btn', function (event){
     event.preventDefault();
     currentElement = $(this);
     $.ajax({
         type: "POST",
-        url: baseUri + 'subscribe',
+        url: baseUri + 'favorite',
         dataType: 'json',
         data: {
             'objectId': $(this).data('objectId'),

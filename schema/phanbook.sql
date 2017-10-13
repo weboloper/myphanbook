@@ -218,7 +218,7 @@ CREATE TABLE `postsHistory` (
 -- Table structure for table `PostsFavorites`
 --
 
-DROP TABLE IF EXISTS `postsFavorites`;
+DROP TABLE IF EXISTS `favorite`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `postsFavorites` (

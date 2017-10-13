@@ -18,7 +18,7 @@ namespace Phanbook\Models;
  * @router /posts/subscribe
  * @see    controller subscribe
  */
-class PostsFavorites extends ModelBase
+class Favorite extends ModelBase
 {
 
     use MyTimestampable;
@@ -143,7 +143,7 @@ class PostsFavorites extends ModelBase
      */
     public function getSource()
     {
-        return 'PostsFavorites';
+        return 'Favorite';
     }
     /**
     * Create a posts-views logging the ipaddress where the post was created

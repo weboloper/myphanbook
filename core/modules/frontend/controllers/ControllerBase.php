@@ -114,10 +114,10 @@ class ControllerBase extends Controller
         $this->setJsonResponse();
 
         if (!$this->auth->isAuthorizedVisitor() ||
-            $user = $this->userService->findFirstById($this->auth->getUserId())
+            !$user = $this->userService->findFirstById($this->auth->getUserId())
         ) {
             $this->jsonMessages['messages'][] = [
-                'type'    => 'error',
+                'type'    => 'danger',
                 'content' => t('Only authorized users can vote')
             ];
 
@@ -142,8 +142,8 @@ class ControllerBase extends Controller
             }
         }
 
-        if ($object == Vote::OBJECT_POSTS_REPLIES) {
-            if (!$postReply = PostsReply::findFirstById($objectId)) {
+        if ($object == Vote::OBJECT_COMMENTS) {
+            if (!$postReply = Comments::findFirstById($objectId)) {
                 $this->jsonMessages['messages'][] = [
                     'type'    => 'error',
                     'content' => 'Post reply does not exist'
