@@ -5,7 +5,9 @@
                 <div class="page-content">
                     <h2>About {{ user.getFullName() }}</h2>
                     <div class="user-profile-img">
-                    <img width="60" height="60" src="{{ getUrlAvatar(user.email) }}" alt="admin">
+
+
+                    <img width="60" height="60" src="{{ getAvatarSrc(user.avatar) }}" class="img-thumbnail">
                     </div>
                     <div class="ul_list ul_list-icon-ok about-user">
                         <ul>

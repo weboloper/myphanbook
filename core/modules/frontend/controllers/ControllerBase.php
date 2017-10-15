@@ -152,10 +152,12 @@ class ControllerBase extends Controller
             }
 
             // Set karma Voting someone else's post (positive or negative) on posts reply
-            $this->setPointReply($way, $user, $postReply);
+            // $this->setPointComment($way, $user, $postReply);
         }
 
         $vote = Vote::vote($objectId, $object, $way);
+
+
 
         if (!$vote) {
             $this->db->rollback();
@@ -166,13 +168,13 @@ class ControllerBase extends Controller
             return $this->jsonMessages;
         }
 
-        if ($user->getVote() <= 0) {
-            $this->jsonMessages['messages'][] = [
-                'type'    => 'error',
-                'content' =>  t('You don\'t have enough votes available :)')
-            ];
-            return $this->jsonMessages;
-        }
+        // if ($user->getVote() <= 0) {
+        //     $this->jsonMessages['messages'][] = [
+        //         'type'    => 'error',
+        //         'content' =>  t('You don\'t have enough votes available :)')
+        //     ];
+        //     return $this->jsonMessages;
+        // }
 
         //checking the user have already voted this post yet
         if (is_array($vote)) {
@@ -201,29 +203,31 @@ class ControllerBase extends Controller
      * @param \Phanbook\Models\PostsReply $postReply
      * @return array
      */
-    public function setPointReply($way, $user, $postReply)
+    public function setPointComment($way, $user, $postReply)
     {
         if ($postReply->getUsersId() != $user->getId()) {
             if ($way == 'positive') {
-                if ($postReply->post->getUsersId() != $user->getId()) {
-                    $karmaCount = intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
-                    $points = Karma::VOTE_UP_ON_MY_REPLY_ON_MY_POST + $karmaCount;
-                } else {
-                    $points = Karma::VOTE_UP_ON_MY_REPLY;
-                    $points += intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
-                }
-                $postReply->user->increaseKarma($points);
-                $user->increaseKarma(Karma::VOTE_UP_ON_SOMEONE_ELSE_REPLY);
+                // if ($postReply->post->getUsersId() != $user->getId()) {
+                //     $karmaCount = intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
+                //     $points = Karma::VOTE_UP_ON_MY_REPLY_ON_MY_POST + $karmaCount;
+                // } else {
+                //     $points = Karma::VOTE_UP_ON_MY_REPLY;
+                //     $points += intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
+                // }
+                $postReply->user->increaseKarma(Karma::SOMEONE_DID_VOTE_MY_COMMENT);
+                // $postReply->user->increaseKarma($points);
+                // $user->increaseKarma(Karma::VOTE_UP_ON_SOMEONE_ELSE_REPLY);
             } else {
-                if ($postReply->post->getUsersId() != $user->getId()) {
-                    $karmaCount = intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
-                    $points = Karma::VOTE_DOWN_ON_MY_REPLY_ON_MY_POST + $karmaCount;
-                } else {
-                    $points = Karma::VOTE_DOWN_ON_MY_REPLY;
-                    $points += intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
-                }
-                $postReply->user->decreaseKarma($points);
-                $user->decreaseKarma(Karma::VOTE_DOWN_ON_SOMEONE_ELSE_REPLY);
+                // if ($postReply->post->getUsersId() != $user->getId()) {
+                //     $karmaCount = intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
+                //     $points = Karma::VOTE_DOWN_ON_MY_REPLY_ON_MY_POST + $karmaCount;
+                // } else {
+                //     $points = Karma::VOTE_DOWN_ON_MY_REPLY;
+                //     $points += intval(abs($user->getKarma() - $postReply->user->getKarma()) / 1000);
+                // }
+                $postReply->user->decreaseKarma(Karma::SOMEONE_DID_VOTE_MY_COMMENT);
+                // $postReply->user->decreaseKarma($points);
+                // $user->decreaseKarma(Karma::VOTE_DOWN_ON_SOMEONE_ELSE_REPLY);
             }
         }
         if ($postReply->save()) {
@@ -256,14 +260,14 @@ class ControllerBase extends Controller
         if ($post->getUsersId() != $user->getId()) {
             if ($way == 'positive') {
                 $post->user->increaseKarma(Karma::SOMEONE_DID_VOTE_MY_POST);
-                $user->increaseKarma(Karma::VOTE_ON_SOMEONE_ELSE_POST);
+                // $user->increaseKarma(Karma::VOTE_ON_SOMEONE_ELSE_POST);
             } else {
                 $post->user->decreaseKarma(Karma::SOMEONE_DID_VOTE_MY_POST);
-                $user->increaseKarma(Karma::VOTE_ON_SOMEONE_ELSE_POST);
+                // $user->increaseKarma(Karma::VOTE_ON_SOMEONE_ELSE_POST);
             }
         }
         if ($post->save()) {
-            $user->setVote($user->getVote() - 1);
+            // $user->setVote($user->getVote() - 1);
             if (!$user->save()) {
                 foreach ($user->getMessages() as $message) {
                     $this->jsonMessages['messages'][] = [

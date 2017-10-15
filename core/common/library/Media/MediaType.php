@@ -27,13 +27,13 @@ class MediaType
         'image/jpeg'
     ];
     public $videoTypes = [
-        'video/mp3',
-        'video/mp4'
+        // 'video/mp3',
+        // 'video/mp4'
     ];
 
     public $documentTypes  = [
-        'text/plain',
-        'application/pdf'
+        // 'text/plain',
+        // 'application/pdf'
     ];
     /**
      * Attempt to determine the real file type of a file.

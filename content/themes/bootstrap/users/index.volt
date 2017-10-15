@@ -9,7 +9,7 @@
                             <div class="fff">
                                 <div class="thumbnail-user-list">
                                     <a href="#">
-                                        <img src="{{getUrlAvatar(user.email, 200)}}">
+                                        <img src="{{ getAvatarSrc(user.avatar) }}">
                                     </a>
                                 </div>
                                 <div class="caption">

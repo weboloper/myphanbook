@@ -51,6 +51,24 @@ class ZFunction extends Injectable
 
         return "/core/assets/images/$name";
     }
+
+    /**
+     * Retrieve an image to represent an attachment.
+     *
+     * @todo Use Apache (Nginx) instead of this (PHP)
+     * @param  string $name A name images you want to get
+     * @return string
+     */
+    public static function getAvatarSrc($name)
+    {   
+        if ( !empty($name) && file_exists(content_path("uploads/avatars/$name")) ) {
+            return "/content/uploads/avatars/$name";
+        }
+
+        return "/content/uploads/avatars/default.png";
+    }
+
+
     /**
      * Display date to human easy  understand
      *

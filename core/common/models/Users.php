@@ -91,6 +91,12 @@ class Users extends ModelBase
      *
      * @var string
      */
+    protected $avatar;
+
+    /**
+     *
+     * @var string
+     */
     protected $tokenType;
 
     /**
@@ -316,6 +322,19 @@ class Users extends ModelBase
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field lastname
+     *
+     * @param  string $lastname
+     * @return $this
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
@@ -682,6 +701,17 @@ class Users extends ModelBase
     }
 
     /**
+     * Method to set the value of field lastname
+     *
+     * @param  string $lastname
+     * @return $this
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
      * Returns the value of field tokenType
      *
      * @return string
@@ -1041,6 +1071,7 @@ class Users extends ModelBase
         $this->theme      = 'D';
         $this->modifiedAt = time();
         $this->createdAt  = time();
+        $this->avatar = null;
     }
 
     public function afterValidation()
@@ -1164,6 +1195,7 @@ class Users extends ModelBase
             'email'             => 'email',
             'firstname'         => 'firstname',
             'lastname'          => 'lastname',
+            'avatar'            => 'avatar',
             'tokenType'         => 'tokenType',
             'tokenGithub'       => 'tokenGithub',
             'tokenGoogle'       => 'tokenGoogle',

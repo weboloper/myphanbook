@@ -19,9 +19,12 @@
    
     <!-- Main Style -->
     {{ assets.outputCss('theme_css') }}
+    {{ assets.outputInlineCss() }}
 
     <!-- Responsive Style -->
     {{ stylesheet_link('/core/assets/css/font-awesome.min.css?v=2') }}
+    {{ stylesheet_link('/core/assets/css/dropzone.css?v=2') }}
+
 
     {{ this.assets.outputCss() }}
     <script type="text/javascript">
@@ -53,12 +56,15 @@
 <!-- js -->
 {{ javascript_include('core/assets/js/jquery.js')}}
 {{ javascript_include('core/assets/js/bootstrap-notify.js')}}
+{{ javascript_include('/core/assets/js/dropzone.js')}}
 {{ javascript_include('core/assets/js/app.function.js')}}
 {{ javascript_include('core/assets/js/app.ajax.js')}}
 {{ javascript_include('core/assets/js/app.js')}}
 
 {{ assets.outputJs('theme_js') }}
 {{ assets.outputJs() }}
+{{ assets.outputInlineJs() }}
+
 {% block scripts%} {% endblock %}
 <!-- End js -->
 </body>

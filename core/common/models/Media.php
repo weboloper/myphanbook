@@ -15,6 +15,8 @@ namespace Phanbook\Models;
 use Phalcon\Http\Request\File;
 use Phanbook\Media\MediaFiles;
 use Phanbook\Media\MediaType;
+use Phanbook\Utils\Hash;
+use Phanbook\Easy\Easy as Easy;
 
 class Media extends ModelBase
 {
@@ -272,7 +274,61 @@ class Media extends ModelBase
         }
         return true;
     }
-    public function beforeSave()
+
+    /**
+     * Input file for media, using for upload file
+     * @param File $fileObj
+     * @return bool true if all ok. Otherwise, false
+     * @internal param Object $File $fileObj File upload by user
+     */
+    public function initAvatar(File $fileObj)
+    {
+        $fileExt     = $fileObj->getRealType();
+        $mediaType   = new MediaType();
+
+        // Check if file extension's allowed
+        if (!$mediaType->checkExtension($fileExt)) {
+            return $this->setError(t("Can't upload because file type's not allowed"). ": ". $fileExt);
+        }
+
+        // generate path of file
+        // $key =  "tmp/" .  $fileObj->getName();
+        // $serverPath = content_path('uploads/' . $key);
+        $localPath = $fileObj->getTempName();
+
+        // if (!file_exists($localPath)) {
+        //     return $this->setError(t("Can't find temp file for upload. This maybe caused by server configure"));
+        // }
+        // if ($this->fileSystem->checkFileExists($serverPath)) {
+        //     return $this->setError(
+        //         t(
+        //             'An error(s) occurred when uploading file(s), ' .
+        //             'Another file have same name with this file. Please change file name before upload'
+        //         )
+        //     );
+        // }
+
+        // if (!$this->fileSystem->uploadFile($localPath, $key, $fileObj->getExtension())) {
+        //     return $this->setError(t("Can't find temp file for upload. This maybe caused by server configure"));
+        // }
+ 
+
+        $name = self::makeHash();
+        $thumb = new Easy();
+        $thumb->Thumbsize = 150;
+        $thumb->Cropimage = [3,1,125,125,85,85];
+        $thumb->Thumbsaveas = 'jpg';
+        $thumb->Thumbfilename =  $name.'.jpg';
+        $thumb->Thumblocation = content_path('uploads/avatars/');
+        $thumb->Createthumb( $localPath  , 'file');
+
+        return 'uploads/avatars/'.$name.'.jpg';
+    }
+
+
+
+
+    public function beforeValidationOnCreate()
     {
         $this->userId = container('auth')->getUserId();
         $this->createdAt = time();
@@ -287,8 +343,15 @@ class Media extends ModelBase
         $media = new Media();
         $media->setMetaFile($key);
         if (!$media->save()) {
-            return false;
+            // return false;
+            $messages = $media->getMessages();
+            $errors = array();
+            foreach ($messages as $message) {
+                $errors[] = $message;
+            }
+            return $errors;
         }
         return true;
     }
+
 }

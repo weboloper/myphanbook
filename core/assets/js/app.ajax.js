@@ -57,7 +57,7 @@ $('body').on('click', '.voter', function (event) {
 });
 
 //subscribe or unsubscribe a posts
-$('body').on('click', '.favorite-btn', function (event){
+$('body').on('click', '.favoriter', function (event){
     event.preventDefault();
     currentElement = $(this);
     $.ajax({
@@ -72,10 +72,12 @@ $('body').on('click', '.favorite-btn', function (event){
             v = parseInt(v);
             if (data.messages[0].flag == 1) {
                 v = v + 1;
-                currentElement.html('<i class="icon-star"></i>' + v);
+                currentElement.addClass('favorited');
+                currentElement.html('<i class="fa fa-heart"></i>' + v);
             } else{
                 v = v - 1;
-                currentElement.html('<i class="icon-star"></i>' + v );
+                currentElement.removeClass('favorited');
+                currentElement.html('<i class="fa fa-heart"></i>' + v );
             };
         },
         error: function( xhr, status ) {

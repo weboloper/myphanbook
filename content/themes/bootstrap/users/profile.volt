@@ -3,66 +3,95 @@
         <div class="boxedtitle page-title">
             <h2 class="text-normal">{{ t('Edit Profile') }}</h2>
         </div>
+        <hr>
         <div class="form-style form-style-4">
-        {{ form( '/users/profile', 'enctype': 'multipart/form-data') }}
+        
+             <div class="form-group row">
+
+              {{ form('users/avatarUpload', 'method' : 'post',  'class':'dropzone  col-2', 'id':'avatarUpload' , 'enctype': 'multipart/form-data' ) }}
+                    <div class="dz-message">
+                        <div class="user-profile-img">
+                            <img src="{{ getAvatarSrc(object.avatar) }}" class="profile-avatar img-fluid img-thumbnail"/>
+                        </div>
+                        <span></span>
+                    </div>
+               
+                {{end_form()}}
+
+
+              <div class="col-10">
+                {{ form.render('username', ['class': 'form-control' , 'disabled' : 'disabled']) }}
+              </div>
+            </div>
+
+            <hr>
+            {{ form( '/users/profile', 'enctype': 'multipart/form-data') }}
             {%- if object is defined -%}
                 {{ form.render('id') }}
             {%- endif -%}
-             <div class="form-inputs clearfix">
-                <p>
-                    <label>{{ t('First Name') }}</label>
-                    {{ form.render('firstname') }}
-                </p>
-                <p>
-                    <label>{{ t('Last Name') }}</label>
-                    {{ form.render('lastname') }}
-                </p>
-                <p>
-                    <label class="required">{{ t('E-Mail') }}<span>*</span></label>
-                    {{ form.render('email') }}
-                </p>
-                <p>
-                    <label class="required">{{ t('Username') }}<span>*</span></label>
-                    {{ form.render('username') }}
-                </p>
-                <p>
-                    <label>{{ t('Birthday') }}</label>
-                    {{ form.render('birthDate') }}
-                </p>
-             </div>
-            <div class="form-style form-style-2">
-                <div class="user-profile-img">
-                    <img src="{{ getUrlAvatar(email) }}">
-                </div>
-                <p class="user-profile-p">
-                    <label>{{ t('Profile Picture') }}</label>
-                    <div class="fileinputs">
-                        <input type="file" class="file">
-                        <div class="fakefile">
-                            <button type="button" class="button small margin_0">{{ t('Select file') }}</button>
-                            <span><i class="fa fa-arrow-up"></i>{{ t('Browse') }}</span>
-                        </div>
-                    </div>
-                <p></p>
-                <div class="clearfix"></div>
-                <p>
-                    <label>{{ t('About Yourself') }}</label>
-                    {{ form.render('bio') }}
-                </p>
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('First Name') }}</label>
+              <div class="col-10">
+                {{ form.render('firstname', ['class': 'form-control']) }}
+              </div>
             </div>
-            <div class="form-inputs clearfix">
-                <p>
-                    <label>{{ t('Twitter') }}</label>
-                    {{ form.render('twitter') }}
-                </p>
-                <p>
-                    <label>{{ t('GitHub') }}</label>
-                    {{ form.render('github') }}
-                </p>
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('Last Name') }}</label>
+              <div class="col-10">
+                {{ form.render('lastname', ['class': 'form-control']) }}
+              </div>
             </div>
-            <p class="form-submit">
-                <input type="submit" value="{{ t('Update') }}" class="button color small login-submit submit">
-            </p>
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('E-mail') }}</label>
+              <div class="col-10">
+                {{ form.render('email', ['class': 'form-control']) }}
+              </div>
+            </div>
+
+            
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('Birthday') }}</label>
+              <div class="col-10">
+                {{ form.render('birthDate', ['class': 'form-control']) }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('About Yourself') }}</label>
+              <div class="col-10">
+                {{ form.render('bio', ['class': 'form-control']) }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('Twitter') }}</label>
+              <div class="col-10">
+                {{ form.render('twitter', ['class': 'form-control']) }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">{{ t('Github') }}</label>
+              <div class="col-10">
+                {{ form.render('github', ['class': 'form-control']) }}
+              </div>
+            </div>
+
+
+ 
+            
+
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label"></label>
+              <div class="col-10">
+                 <input type="submit" value="{{ t('Update') }}" class="btn btn-primary">
+              </div>
+            </div>
+ 
+   
             </form>
         </div>
     </div><!-- End page-content -->

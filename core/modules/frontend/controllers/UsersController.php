@@ -15,11 +15,16 @@ namespace Phanbook\Frontend\Controllers;
 
 use Phanbook\Models\Users;
 use Phanbook\Models\Posts;
+use Phanbook\Models\Media;
 use Phanbook\Models\ModelBase;
 use Phanbook\Models\Comments;
 use Phanbook\Frontend\Forms\UserForm;
 use Phanbook\Frontend\Forms\UserSettingForm;
 use Phanbook\Frontend\Forms\ChangePasswordForm;
+
+use Phanbook\Media\MediaType;
+use Phanbook\Utils\Hash;
+use Phanbook\Easy\Easy as Easy;
 
 /**
  * \Phanbook\Frontend\Controllers\UsersController
@@ -249,6 +254,31 @@ class UsersController extends ControllerBase
             'object' => $user,
             'email'  => $user->getEmail(),
         ]);
+
+        $script = '
+
+            Dropzone.options.myAwesomeDropzone = {
+              paramName: "file", // The name that will be used to transfer the file
+              maxFilesize: 2, // MB
+              maxfilesreached : 1,
+              maxFiles: 1,
+              maxThumbnailFilesize: 1,
+              uploadMultiple: false,
+              accept: function(file, done) {
+                if (file.name == "justinbieber.jpg") {
+                  done("Naha, you dont.");
+                }
+                else { done(); }
+              }
+            };
+
+
+        ';
+
+        $this->assets->addInlineJs($script);
+        $this->assets->addInlineCss('#avatarUpload { border:1px; min-height:150px; padding:0px; } #avatarUpload .dz-message {margin:0px; padding:0 1rem} #avatarUpload .dz-preview {margin:0px; padding:0 1rem} ');
+
+
     }
 
     private function refreshAuthSession($array)
@@ -367,4 +397,86 @@ class UsersController extends ControllerBase
             'object' => $user,
         ]);
     }
+
+
+    /**
+     * View and edit user profile.
+     */
+    public function avatarUploadAction()
+    {   
+ 
+        $uid= $this->auth->getUserId();
+        $object = Users::findFirstById($uid);
+
+        if($object && $object->getStatus() == $object::STATUS_ACTIVE) {
+
+            if ($this->request->hasFiles()) {
+
+                $uploads = $this->request->getUploadedFiles();
+
+                foreach ($uploads as $fileObj) {
+
+                    $fileExt     = $fileObj->getRealType();
+                    $mediaType   = new MediaType();
+
+                    if (!$mediaType->checkExtension($fileExt)) {
+                        return $this->setError(t("Can't upload because file type's not allowed"). ": ". $fileExt);
+                    }
+
+                    $localPath = $fileObj->getTempName();
+
+                    $name =  Hash::generate()."-". $uid .'.jpg';
+                    $thumb = new Easy();
+                    $thumb->Thumbsize = 150;
+                    $thumb->Cropimage = [3,1,125,125,85,85];
+                    $thumb->Thumbsaveas = 'jpg';
+                    $thumb->Thumbfilename =  $name;
+                    $thumb->Thumblocation = content_path('uploads/avatars/');
+                    $thumb->Createthumb( $localPath  , 'file');
+
+                    $object->setAvatar( $name );
+                    $object->save();
+
+                }
+
+            }
+
+        }
+
+        die(); // no need to use media
+
+        if ($this->request->hasFiles()) {
+            
+            $media = new Media();
+            $uploads = $this->request->getUploadedFiles();
+            $this->view->disable();
+            $uploaded = true;
+
+        
+
+            foreach ($uploads as $fileObj) {
+
+                $avatar =  $media->initAvatar($fileObj);
+                if (!$avatar) {
+                    $uploaded = false;
+                }else {
+                    $path = $avatar;
+                }
+            }
+
+
+            if (!$uploaded) {
+                $error = implode("\n", $media->getError());
+                $this->response->setStatusCode(406, $error);
+                $this->response->setContent($error);
+            } else {
+                $object->setAvatar( $path );
+                $object->save();
+                $this->response->setStatusCode(200, t("Success"));
+            }
+            return $this->response->send();
+        }
+
+    }
+
 }

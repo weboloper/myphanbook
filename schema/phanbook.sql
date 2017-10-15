@@ -458,6 +458,7 @@ CREATE TABLE `users` (
   `email` varchar(70) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `lastname` varchar(40) DEFAULT NULL,
+  `avatar` varchar(200) DEFAULT NULL,
   `tokenType` varchar(16) DEFAULT NULL,
   `tokenGithub` char(100) DEFAULT NULL,
   `tokenGoogle` char(100) DEFAULT NULL,

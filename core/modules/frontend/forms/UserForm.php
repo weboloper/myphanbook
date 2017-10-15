@@ -41,6 +41,7 @@ class UserForm extends Form
                 'placeholder' => t('Firstname'),
                 'required' => 'true',
                 'autofocus' => 'true',
+                'class' => 'form-control'
             ]
         );
         $firstName->addValidators(
@@ -61,6 +62,7 @@ class UserForm extends Form
                 'placeholder' => 'Lastname',
                 'required' => 'true',
                 'autofocus' => 'true',
+                'class' => 'form-control'
             ]
         );
         $lastName->addValidators(
@@ -80,6 +82,7 @@ class UserForm extends Form
             [
                 'placeholder' => t('Username'),
                 'required' => 'true',
+                'class' => 'form-control'
             ]
         );
         $username->addValidators(
