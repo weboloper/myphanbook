@@ -87,11 +87,11 @@ class UserForm extends Form
         );
         $username->addValidators(
             [
-                new PresenceOf(
-                    [
-                        'message' => t('Username is required.')
-                    ]
-                )
+                // new PresenceOf(
+                //     [
+                //         'message' => t('Username is required.')
+                //     ]
+                // )
             ]
         );
         $this->add($username);

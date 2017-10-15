@@ -1,23 +1,23 @@
 <div class="card mb-3">
-                 
-                      <div class="card-body">
-                        <div class="row">
-                        <div class="col-4 col-sm-2">
-                            <img   src="{{ getAvatarSrc(user.avatar) }}" class="img-thumbnail img-fluid">
-                        </div>
-                        <div class="col-8 col-sm-10">
-                        <h4 class="card-title">{{ user.getFullName() }}</h4>
-                        <p class="card-text">{{ this.markdown.text(user.bio) }}</p>
-                        <ul class="nav">
-                            <li class="nav-item"><span class="nav-link pl-0">{{ totalQuestions }} posts</span></li>
-                            <li class="nav-item"><span class="nav-link">{{ totalReply }} comments</span></li>
-                            <li class="nav-item"><span class="nav-link">{{ user.getHumanKarma() }} karma</span></li>
-                        </ul>
-                        <p class="card-text"><small class="text-muted">Joined {{ user.getHumanCreatedAt() }}</small></p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
+  <img src="https://placekitten.com/1200/300" class="card-img-top">
+  <div class="card-body">
+    <div class="row">
+    <div class="col-4 col-sm-2">
+        <img   src="{{ getAvatarSrc(user.avatar) }}" class="img-thumbnail img-fluid">
+    </div>
+    <div class="col-8 col-sm-10">
+    <h4 class="card-title">{{ user.getFullName() }}</h4>
+    <p class="card-text">{{ this.markdown.text(user.bio) }}</p>
+    <ul class="nav">
+        <li class="nav-item"><span class="nav-link pl-0">{{ totalQuestions }} posts</span></li>
+        <li class="nav-item"><span class="nav-link">{{ totalReply }} comments</span></li>
+        <li class="nav-item"><span class="nav-link">{{ user.getHumanKarma() }} karma</span></li>
+    </ul>
+    <p class="card-text"><small class="text-muted">Joined {{ user.getHumanCreatedAt() }}</small></p>
+    </div>
+    </div>
+  </div>
+</div>
 
 
 <div class="col-md-9">

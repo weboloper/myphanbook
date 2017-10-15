@@ -225,7 +225,7 @@ class UsersController extends ControllerBase
                 $user->setFirstname($this->request->getPost('firstname', 'striptags'));
                 $user->setLastname($this->request->getPost('lastname', 'striptags'));
                 $user->setEmail($this->request->getPost('email', 'email'));
-                $user->setUsername($this->request->getPost('username', 'striptags'));
+                // $user->setUsername($this->request->getPost('username', 'striptags'));
                 $user->setBirthdate($this->request->getPost('birthDate'));
                 $user->setBio($this->request->getPost('bio', 'trim'));
                 $user->setTwitter($this->request->getPost('twitter'));

@@ -49,6 +49,7 @@
 
             <div class="form-group">
               <label for="example-text-input" class="col-form-label">{{ t('About Yourself') }}</label>
+              {{ form.render('bio', ['class': 'form-control']) }}
             </div>
 
             <div class="form-group">
