@@ -75,7 +75,7 @@ class ControllerBase extends Controller
         $this->view->setVars(
             [
                 'tab'           => $this->currentOrder,
-                'tags'          => Tags::find(),
+                // 'tags'          => Tags::find(),
                 // 'hotPosts'      => Posts::getHotPosts(5),
                 // 'totalPost'     => Posts::totalPost(),
                 // 'highestKarma'  => Users::highestKarma(),

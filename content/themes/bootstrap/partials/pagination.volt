@@ -11,35 +11,49 @@
             {% set startIndex = totalPages - 4 %}
         {% endif %}
     {% endif %}
-    <div class="pagination">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
         {% if currentPage > 1 %}
             {% set prev = currentPage - 1 %}
-            <a href="{{ paginatorUri ~ '?page=' ~ prev }}" class="prev-button">
+             <li class="page-item">
+            <a href="{{ paginatorUri ~ '?page=' ~ prev }}" class="page-link">
                 <i class="fa fa-angle-left"></i>
             </a>
+            </li>
         {% endif %}
         {% for pageIndex in startIndex..totalPages %}
             {% if pageIndex is startIndex + 5 %}
                 {% break %}
             {% endif %}
             {% if pageIndex is currentPage %}
-                <span class="current"> {{ currentPage }}</span>
+                <li class="page-item active">
+                <span class="page-link"> {{ currentPage }}</span>
+                </li>
             {% else %}
-                <a href="{{paginatorUri ~ '?page=' ~ pageIndex }}">
+                <li class="page-item">
+                <a href="{{paginatorUri ~ '?page=' ~ pageIndex }}" class="page-link">
                     {{ pageIndex }}
                 </a>
+                </li>
             {% endif %}
 
         {% endfor %}
         {% if currentPage < totalPages %}
             {% set next = currentPage + 1 %}
-            <span class="page-numbers dots">...</span>
-            <a href="{{ paginatorUri ~ '?page=' ~ totalPages }}">
+             <li class="page-item">
+            <span class="page-link">...</span>
+            </li>
+             <li class="page-item">
+            <a href="{{ paginatorUri ~ '?page=' ~ totalPages }}" class="page-link">
                 {{ totalPages}}
             </a>
-            <a href="{{ paginatorUri ~ '?page=' ~ next }}"class="next-button">
+            </li>
+             <li class="page-item">
+            <a href="{{ paginatorUri ~ '?page=' ~ next }}"class="page-link">
                 <i class="fa fa-angle-right"></i>
             </a>
+            </li>
         {% endif %}
-    </div>
+        </ul>
+    </nav>
 {% endif %}
