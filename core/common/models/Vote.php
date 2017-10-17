@@ -318,10 +318,10 @@ class Vote extends ModelBase
         if ($vote->getUsersId()) {
             switch ($object) {
                 case Vote::OBJECT_POSTS:
-                    return ['type'    => 'error', 'content' => t('You have already voted this post')];
+                    return ['type'    => 'danger', 'content' => t('You have already voted this post')];
                     break;
                 default:
-                    return ['type'    => 'error', 'content' => t('You have already voted this post reply')];
+                    return ['type'    => 'danger', 'content' => t('You have already voted this post reply')];
                     break;
             }
         }

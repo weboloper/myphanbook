@@ -38,8 +38,8 @@ class PostsController extends ControllerBase
     {
         parent::initialize();
 
-        $editor = new Editor();
-        $editor->init();
+        // $editor = new Editor();
+        // $editor->init();
     }
 
     /**

@@ -36,25 +36,26 @@
 </head>
 <body class="{{action}} {{controller}}">
 
-<!-- <div class="loader"><div class="loader_html"></div></div>
- --><div class="m-b-md">
+{{ partial('partials/header')}}
+
+{{ partial('partials/breadcrumb')}}
+<section class="container main-content">
     {{ this.flashSession.output() }}
-</div>
-<div id="wrap">
-    {{ partial('partials/header')}}
+    {% block content %}{% endblock %}
+</section><!-- End container -->
 
-    {{ partial('partials/breadcrumb')}}
-    <section class="container main-content">
-        {% block content %}{% endblock %}
-    </section><!-- End container -->
-
-    {{ partial('partials/footer')}}
-</div><!-- End wrap -->
-
-<div class="go-up"><i class="fa fa-chevron-up"></i></div>
+{{ partial('partials/footer')}}
 
 <!-- js -->
-{{ javascript_include('core/assets/js/jquery.js')}}
+<script
+  src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../../../core/assets/js/jquery-3.2.1.min.js"><\/script>')</script>
+
+{{ javascript_include('core/assets/js/jquery-ui.min.js')}}
+{{ javascript_include('core/assets/js/popper.min.js')}}
+{{ javascript_include('core/assets/js/bootstrap.min.js')}}
 {{ javascript_include('core/assets/js/bootstrap-notify.js')}}
 {{ javascript_include('/core/assets/js/dropzone.js')}}
 {{ javascript_include('core/assets/js/app.function.js')}}

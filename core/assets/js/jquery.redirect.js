@@ -1,7 +1,7 @@
 /*
-jQuery Redirect v1.0.1
+jQuery Redirect v1.1.1
 
-Copyright (c) 2013-2015 Miguel Galante
+Copyright (c) 2013-2017 Miguel Galante
 Copyright (c) 2011-2013 Nemanja Avramovic, www.avramovic.info
 
 Licensed under CC BY-SA 4.0 License: http://creativecommons.org/licenses/by-sa/4.0/
@@ -25,9 +25,23 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
      * @param {Object} values - (optional) An object with the data to send. If not present will look for values as QueryString in the target url.
      * @param {string} method - (optional) The HTTP verb can be GET or POST (defaults to POST)
      * @param {string} target - (optional) The target of the form. "_blank" will open the url in a new window.
+     * @param {boolean} traditional - (optional) This provides the same function as jquery's ajax function. The brackets are omitted on the field name if its an array.  This allows arrays to work with MVC.net among others.
+     * @param {boolean} redirectTop - (optional) If its called from a iframe, force to navigate the top window. 
      */
-    $.redirect = function (url, values, method, target) {
-        method = (method && method.toUpperCase() === 'GET') ? 'GET' : 'POST';
+    $.redirect = function (url, values, method, target, traditional, redirectTop) {
+        redirectTop = redirectTop || false;
+        var generatedForm = $.redirect.getForm(url, values, method, target, traditional);
+        $('body', redirectTop ? window.top.document : undefined).append(generatedForm.form);
+        generatedForm.submit();
+    };
+
+
+    $.redirect.getForm = function (url, values, method, target, traditional) {
+        method = (method && ["GET", "POST", "PUT", "DELETE"].indexOf(method.toUpperCase()) !== -1) ? method.toUpperCase() : 'POST';
+
+        url = url.split("#");
+        var hash = url[1] ? ("#" + url[1]) : "";
+        url = url[0];
 
         if (!values) {
             var obj = $.parseUrl(url);
@@ -35,19 +49,22 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
             values = obj.params;
         }
 
+        values = removeNulls(values);
+
         var form = $('<form>')
-          .attr("method", method)
-          .attr("action", url);
+            .attr("method", method)
+            .attr("action", url + hash);
+
 
         if (target) {
-          form.attr("target", target);
+            form.attr("target", target);
         }
 
-        iterateValues(values, [], form);
-        $('body').append(form);
-        form[0].submit();
-    };
+        var submit = form[0].submit;
+        iterateValues(values, [], form, null, traditional);
 
+        return { form: form, submit: function () { submit.call(form[0]); } };
+    }
     //Utility Functions
     /**
      * Url and QueryString Parser.
@@ -55,6 +72,7 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
      * @returns {object} an object with the parsed url with the following structure {url: URL, params:{ KEY: VALUE }}
      */
     $.parseUrl = function (url) {
+
         if (url.indexOf('?') === -1) {
             return {
                 url: url,
@@ -67,7 +85,7 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
         url = parts[0];
 
         var i, pair, obj = {};
-        for (i = 0; i < elems.length; i+= 1) {
+        for (i = 0; i < elems.length; i += 1) {
             pair = elems[i].split('=');
             obj[pair[0]] = pair[1];
         }
@@ -79,7 +97,7 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
     };
 
     //Private Functions
-    var getInput = function (name, value, parent, array) {
+    var getInput = function (name, value, parent, array, traditional) {
         var parentString;
         if (parent.length > 0) {
             parentString = parent[0];
@@ -89,9 +107,12 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
             }
 
             if (array) {
-              name = parentString + "[]";
+                if (traditional)
+                    name = parentString;
+                else
+                    name = parentString + "[" + name + "]";
             } else {
-              name = parentString + "[" + name + "]";
+                name = parentString + "[" + name + "]";
             }
         }
 
@@ -100,20 +121,32 @@ ShareAlike - If you remix, transform, or build upon the material, you must distr
             .attr("value", value);
     };
 
-    var iterateValues = function (values, parent, form, array) {
+    var iterateValues = function (values, parent, form, isArray, traditional) {
         var i, iterateParent = [];
-        for (i in values) {
+        Object.keys(values).forEach(function (i) {
             if (typeof values[i] === "object") {
                 iterateParent = parent.slice();
-                if (array) {
-                  iterateParent.push('');
-                } else {
-                  iterateParent.push(i);
-                }
-                iterateValues(values[i], iterateParent, form, Array.isArray(values[i]));
+                iterateParent.push(i);
+                iterateValues(values[i], iterateParent, form, Array.isArray(values[i]), traditional);
             } else {
-                form.append(getInput(i, values[i], parent, array));
+                form.append(getInput(i, values[i], parent, isArray, traditional));
+            }
+        });
+    };
+
+    var removeNulls = function (values) {
+        var propNames = Object.getOwnPropertyNames(values);
+        for (var i = 0; i < propNames.length; i++) {
+            var propName = propNames[i];
+            if (values[propName] === null || values[propName] === undefined) {
+                delete values[propName];
+            } else if (typeof values[propName] === 'object') {
+                values[propName] = removeNulls(values[propName]);
+            } else if (values[propName].length < 1) {
+                delete values[propName];
             }
         }
+        return values;
     };
+
 }(window.jQuery || window.Zepto || window.jqlite));

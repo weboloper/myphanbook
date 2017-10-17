@@ -47,10 +47,9 @@ class ControllerBase extends Controller
             ->addCss('backend/assets/css/app-custom.css');
 
         $this->assets
-            ->addJs('core/assets/js/jquery.js')
-            ->addJs('core/assets/js/jquery-ui.js')
-            ->addJs('core/assets/js/bootstrap.js')
-            ->addJs('core/assets/js/growl/jquery.growl.js')
+            ->addJs('core/assets/js/jquery-3.2.1.min.js')
+            ->addJs('core/assets/js/jquery-ui.min.js')
+            ->addJs('core/assets/js/bootstrap.min.js')
             ->addJs('core/assets/js/chosen/chosen.jquery.min.js')
             ->addJs('backend/assets/js/jquery.taginput.src.js')
             ->addJs('backend/assets/js/app.js')

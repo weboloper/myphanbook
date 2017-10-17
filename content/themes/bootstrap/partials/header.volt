@@ -1,39 +1,3 @@
-{% if is_authorized() %}
-<div class="setting-panel" style="display:none">
-        <section class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="page-content">
-                        <h2>{{ t('Settings') }}</h2>
-                        <div class="form-style form-style-3">
-                            <ul>
-                                <li><a href="/users/setting">{{ t('Edit Setting') }}</a></li>
-                                <li><a href="">{{ t('My Questions') }}</a></li>
-                                <li><a href="">{{ t('My Answers') }}</a></li>
-                                <li><a href="/users/profile">{{ t('Edit Profile') }}</a></li>
-                                <li><a href="/users/changepassword">{{ t('Change Password') }}</a></li>
-
-                            </ul>
-                        </div>
-                    </div><!-- End page-content -->
-                </div><!-- End col-md-6 -->
-                <div class="col-md-6">
-                    <div class="page-content Register">
-                        <h2>{{ t('Dashboard') }}</h2>
-                        <div class="form-style form-style-3">
-                            <ul>
-                                <li><a href="/backend/dashboard">{{ t('Dashboard') }}</a></li>
-                                <li><a href="/backend/themes/custom">{{ t('Edit Theme') }}</a></li>
-                                <li><a href="/users/profile">{{ t('Edit Profile') }}</a></li>
-                                <li>{{ link_to(['for': 'logout'], t('Logout')) }}</li>
-                            </ul>
-                        </div>
-                    </div><!-- End page-content -->
-                </div><!-- End col-md-6 -->
-            </div>
-        </section>
-</div><!-- End login-panel -->
-{% endif %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="/">Logo</a>
@@ -84,17 +48,25 @@
       <ul class="navbar-nav my-2 my-md-0">
          {% if is_authorized() %}
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-plus"></i>{{ t('Settings') }}
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/notifications">
                     {%- if notifications.has() -%}
-                        <span class="mail-status unread"></span>
+                         <span class="badge badge-pill badge-success">&nbsp</span> 
                     {%- endif -%}
                     <i class="fa fa-inbox"></i>
                 </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                 {{auth['username']}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+                  <a class="dropdown-item" href="/users/profile">{{ t('Edit Profile') }}</a>
+                  <a class="dropdown-item" href="/users/changepassword">{{ t('Change Password') }}</a>
+                  <a class="dropdown-item" href="/users/setting">{{ t('Edit Setting') }}</a>
+                  <div class="dropdown-divider"></div>
+                  {{ link_to(['for': 'logout'], t('Logout') , 'class' : 'dropdown-item') }}
+                </div>
             </li>
         {% else %}
             <li class="nav-item">{{ link_to(['for': 'signup'], '<i class="fa fa-user"></i>' ~ t('Sign Up') , 'class': 'nav-link') }}</li>

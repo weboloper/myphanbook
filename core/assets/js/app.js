@@ -11,29 +11,8 @@ $(document).ready(function () {
            // $(this).animate({height:50},200);
         });
     });
-
-    //Display search form
-    $('a.icon-search').on('click', function(e){
-        e.preventDefault();
-        $('.sorter').hide();
-        $('.subheader').hide();
-        $('.icon-search').hide();
-        $('.search-container').toggle("slow", function(){
-            // Animation complete.
-            //$(this).animate({height:50},200);
-        });
-    });
-    $('.cancel').on('click', function(e){
-        $('.sorter').show();
-        $('.subheader').show();
-        $('.icon-search').show();
-        $('.search-container').hide();
-    });
-
-    //Subscribe are questions
-    $('#request-subscribe').on('show.bs.modal', function (event) {
-    })
-
+ 
+ 
     //Adding editor
     if (action != 'index' && $('div').hasClass('wmd-panel')) {
         //prettyPrint();
@@ -106,12 +85,7 @@ $(document).ready(function () {
     if (isMobile.SizeSmall()) {
         $('#menus li').slice(-1).hide();
     };
-    //Fix right sidebar when you filter post by a tag
-    if ($('div').hasClass('post-bytag')) {
-        $('#search-right input[type="text"]').css('top',193);
-        $('#search-right input[type="submit"]').css('top', 189 );
-        $('.morelink').css('top', 250);
-    };
+ 
 
     //Adding sticky when you are mouse sscrolls
     if ($('div.answer-summary').length > 2) {

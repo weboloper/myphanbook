@@ -103,7 +103,7 @@ class ChangePasswordForm extends Form
             new Submit(
                 'save',
                 [
-                'class' => 'button color small submit',
+                'class' => 'btn btn-primary',
                 'value' => t('Save')
                 ]
             )

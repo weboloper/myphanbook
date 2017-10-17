@@ -1,7 +1,5 @@
 <div class="col-md-9">
-    <div class="page-content">
-        <div class="boxedtitle page-title"><h2>Edit Setting</h2></div>
-           <div class="page-content ask-question">
+    <h2>Edit Setting</h2>
                 <div class="form-style form-style-3" id="question-submit">
                     {{ form( this.view.getControllerName() | lower ~ '/setting') }}
                         {% if post is defined %}{{form.render('id')}} {% endif %}
@@ -25,8 +23,6 @@
                         </p>
                     </form>
                 </div>
-            </div><!-- End page-content -->
-    </div><!-- End page-content -->
 </div><!-- End main -->
 <aside class="col-md-3 sidebar">
     {{partial('partials/right-side')}}
