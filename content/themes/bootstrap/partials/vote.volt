@@ -1,6 +1,6 @@
 {% if votes is defined %}
 
-<span class="btn btn-secondary  disabled vote-result">{{ vote_score(objectId, object) }}</span>
+<span class="btn btn-light  disabled vote-result">{{ vote_score(objectId, object) }}</span>
 <ul class="list-inline">
 
    

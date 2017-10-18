@@ -18,8 +18,8 @@
         <p class="post-meta">{{ post.getHumanCreatedAt() }}  by <a href="/@{{ post.user.username }}">{{ post.user.username }}</a> - {{ post.numberReply }} {{ t('Answers') }} - {{ post.numberViews }} {{ t('Views') }}  </p>
  
         {% if single is defined %}
-            {{ partial('partials/vote', ['objectId': post.id, 'object': 'posts']) }} <span class="favoriter" data-object-id="{{ post.id }}">
-                <i class="fa fa-heart"></i>{{ post.postFavorite() }}
+            {{ partial('partials/vote', ['objectId': post.id, 'object': 'posts']) }} <span class="favoriter btn btn-danger" data-object-id="{{ post.id }}">
+                <i class="fa fa-heart"></i> {{ post.postFavorite() }}
             </span>
         {% endif %}
          
