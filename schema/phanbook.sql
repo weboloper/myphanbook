@@ -221,7 +221,7 @@ CREATE TABLE `postsHistory` (
 DROP TABLE IF EXISTS `favorite`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `postsFavorites` (
+CREATE TABLE `favorite` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `postsId` int(10) unsigned NOT NULL,
   `usersId` int(10) unsigned NOT NULL,
