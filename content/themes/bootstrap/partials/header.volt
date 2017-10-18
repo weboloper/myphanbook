@@ -49,6 +49,7 @@
          {% if is_authorized() %}
  
             <li class="nav-item dropdown">
+                
                 <a id="notificationsDropdownLink" class="nav-link dropdown-toggle" href="#" id="notificationsLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                    {%- if notifications.has() -%}
                          <span class="badge badge-pill badge-success">&nbsp</span> 
@@ -70,7 +71,6 @@
                  {{auth['username']}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
                   <a class="dropdown-item" href="/users/profile">{{ t('Edit Profile') }}</a>
                   <a class="dropdown-item" href="/users/changepassword">{{ t('Change Password') }}</a>
                   <a class="dropdown-item" href="/users/setting">{{ t('Edit Setting') }}</a>
