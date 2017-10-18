@@ -360,29 +360,50 @@ class Comments extends ModelBase
 
             $toNotify = [];
 
-            /**
-             * Notify users that always want notifications
-             */
-            foreach (Users::find(['notifications = "Y"', 'columns' => 'id'])->toArray() as $user) {
-                if ($this->usersId != $user['id']) {
+            $belongto = $this->getPost();
+
+            if ($this->usersId !=   $belongto->usersId ) {
                     $notificationId = $this->setNotification(
-                        $user['id'],
+                        $belongto->usersId,
                         $this->postsId,
                         $this->id,
                         Notifications::TYPE_COMMENTS
                     );
 
-                    $this->setActivityNotifications(
-                        $user['id'],
+            $this->setActivityNotifications(
+                        $belongto->usersId,
                         $this->postsId,
                         $this->id,
                         $this->usersId,
                         ActivityNotifications::TYPE_COMMENTS
                     );
-
-                    $toNotify[$user['id']] = $notificationId;
-                }
+                $toNotify[  $belongto->usersId ] = $notificationId;
             }
+            
+
+            /**
+             * Notify users that always want notifications
+             */
+            // foreach (Users::find(['notifications = "Y"', 'columns' => 'id'])->toArray() as $user) {
+            //     if ($this->usersId != $user['id']) {
+            //         $notificationId = $this->setNotification(
+            //             $user['id'],
+            //             $this->postsId,
+            //             $this->id,
+            //             Notifications::TYPE_COMMENTS
+            //         );
+
+            //         $this->setActivityNotifications(
+            //             $user['id'],
+            //             $this->postsId,
+            //             $this->id,
+            //             $this->usersId,
+            //             ActivityNotifications::TYPE_COMMENTS
+            //         );
+
+            //         $toNotify[$user['id']] = $notificationId;
+            //     }
+            // }
             /**
              * Notify users that always want notifications for comment
              */
@@ -390,43 +411,43 @@ class Comments extends ModelBase
             /**
              * Register users subscribed to the post
              */
-            foreach (Favorite::findByPostsId($this->postsId) as $subscriber) {
-                if (!isset($toNotify[$subscriber->getUsersId()])) {
-                    $notificationId = $this->setNotification(
-                        $subscriber->getUsersId(),
-                        $this->postsId,
-                        $this->id,
-                        Notifications::TYPE_COMMENT
-                    );
+            // foreach (Favorite::findByPostsId($this->postsId) as $subscriber) {
+            //     if (!isset($toNotify[$subscriber->getUsersId()])) {
+            //         $notificationId = $this->setNotification(
+            //             $subscriber->getUsersId(),
+            //             $this->postsId,
+            //             $this->id,
+            //             Notifications::TYPE_COMMENT
+            //         );
 
-                    $this->setActivityNotifications(
-                        $subscriber->getUsersId(),
-                        $this->postsId,
-                        $this->id,
-                        $this->usersId,
-                        ActivityNotifications::TYPE_COMMENT
-                    );
-                    $toNotify[$subscriber->getUsersId()] = $notificationId;
-                }
-            }
+            //         $this->setActivityNotifications(
+            //             $subscriber->getUsersId(),
+            //             $this->postsId,
+            //             $this->id,
+            //             $this->usersId,
+            //             ActivityNotifications::TYPE_COMMENT
+            //         );
+            //         $toNotify[$subscriber->getUsersId()] = $notificationId;
+            //     }
+            // }
 
             /**
              * Register the user in the post's notifications
              */
-            if (!isset($toNotify[$this->usersId])) {
-                $parameters       = [
-                    'usersId = ?0 AND postsId = ?1',
-                    'bind' => array($this->usersId, $this->postsId)
-                ];
-                $hasNotifications = PostsNotifications::count($parameters);
+            // if (!isset($toNotify[$this->usersId])) {
+            //     $parameters       = [
+            //         'usersId = ?0 AND postsId = ?1',
+            //         'bind' => array($this->usersId, $this->postsId)
+            //     ];
+            //     $hasNotifications = PostsNotifications::count($parameters);
 
-                if (!$hasNotifications) {
-                    $notification = new PostsNotifications();
-                    $notification->setUsersId($this->usersId);
-                    $notification->setPostsId($this->postsId);
-                    $notification->save();
-                }
-            }
+            //     if (!$hasNotifications) {
+            //         $notification = new PostsNotifications();
+            //         $notification->setUsersId($this->usersId);
+            //         $notification->setPostsId($this->postsId);
+            //         $notification->save();
+            //     }
+            // }
 
             /**
              * Queue notifications to be sent

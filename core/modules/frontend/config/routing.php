@@ -92,7 +92,7 @@ $frontend->add('/{router}', [
     'module'     => 'frontend',
     'controller' => 'router',
 ])->beforeMatch(function ($uri, $route) {
-    $uris = ['posts', 'users', 'tags', 'search', 'questions', 'backend'];
+    $uris = ['posts', 'users', 'notification', 'tags', 'search', 'questions', 'backend'];
 
     if ($uri == '/' || in_array(ltrim($uri, '/'), $uris)) {
         return false;

@@ -14,12 +14,65 @@
 namespace Phanbook\Frontend\Controllers;
 
 use Phanbook\Models\ActivityNotifications;
+use Phanbook\Notifications\Checker;
 
 /**
  * Class NotificationController
  */
 class NotificationController extends ControllerBase
 {
+
+
+
+    public function indexAction()
+    {
+
+        $usersId = $this->auth->getAuth()['id'];
+        if (!$usersId) {
+            return false;
+        }
+
+        $notifications = ActivityNotifications::find(
+            array(
+            'usersId = ?0',
+            'bind'  => array($usersId),
+            'limit' => 25,
+            'order' => 'createdAt DESC'
+            )
+        );
+
+        $this->view->setVars(
+            [
+                'notifications'       => $notifications
+            ]
+        );
+
+    }
+
+    public function getNotifyAction()
+    {
+        $this->view->disable();
+        $usersId = $this->auth->getUserId();
+
+        $this->setJsonResponse();
+
+        if ($this->request->isPost()) {
+
+            $notifications = $this->notifications->getNotifications($usersId);
+
+            $data = "";
+            foreach ($notifications as $notification) {
+                $data .='<span class="dropdown-item"><strong>'.$notification->userOrigin->username. '</strong> "'.$notification->post->title.'" için yorum ekledi.</span>';
+            }
+
+             return ['data' =>  $data];
+  
+        }
+
+    }
+
+
+
     public function readnotifyAction()
     {
         $this->view->disable();
@@ -37,7 +90,7 @@ class NotificationController extends ControllerBase
             } else {
                 $notify = ActivityNotifications::findFirst(
                     [
-                    'usersId = ?0 AND postsReplyId = ?1',
+                    'usersId = ?0 AND commentsId = ?1',
                     'bind' => [$usersId, $id]
                     ]
                 );

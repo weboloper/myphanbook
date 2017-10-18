@@ -170,7 +170,7 @@ class CommentsController extends ControllerBase
             if ($user->getId() != $post->getUsersId()) {
                 $post->setNumberReply($post->getNumberReply() + 1);
                 $post->user->increaseKarma(Karma::SOMEONE_REPLIED_TO_MY_POST);
-                $user->increaseKarma(Karma::REPLY_ON_SOMEONE_ELSE_POST);
+                // $user->increaseKarma(Karma::REPLY_ON_SOMEONE_ELSE_POST);
 
                 if (!$post->save() || !$user->save()) {
                     $this->logger->error('Save fail answerAction. I am on here ' . __LINE__);

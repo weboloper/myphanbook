@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+
+    
     //Add comment form
     $('.add-comment').on('click', function(e){
         var message =$(this).data('content');

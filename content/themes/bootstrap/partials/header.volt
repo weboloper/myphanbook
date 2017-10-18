@@ -47,14 +47,24 @@
 
       <ul class="navbar-nav my-2 my-md-0">
          {% if is_authorized() %}
-            <li class="nav-item">
-                <a class="nav-link" href="/notifications">
-                    {%- if notifications.has() -%}
+ 
+            <li class="nav-item dropdown">
+                <a id="notificationsDropdownLink" class="nav-link dropdown-toggle" href="#" id="notificationsLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                   {%- if notifications.has() -%}
                          <span class="badge badge-pill badge-success">&nbsp</span> 
                     {%- endif -%}
                     <i class="fa fa-inbox"></i>
                 </a>
+                <div  id="notificationsDropdownMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationsLink" style="min-width:300px">
+                    <span class="dropdown-item" href="/users/profile"><strong>{{ t('Notifications') }}</strong></span>
+                    <div class="dropdown-divider"></div>
+                    <div id="notificationsList"></div>
+                    <div class="dropdown-divider"></div>
+                    <a href="/notifications" class="dropdown-item">{{ t('View all 🡪') }}</a>
+                   
+                </div>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                  {{auth['username']}}

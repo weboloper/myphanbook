@@ -55,7 +55,7 @@ $('body').on('click', '.voter', function (event) {
         success: function (data) {
             if (data != 0) {
                 //currentElement.parent().children("span.vote-count").html(data.data);
-                currentElement.parent().parent().parent().children("span.vote-result").html(data.data);
+                currentElement.parent().children("span.vote-result").html(data.data);
             }
         },
         error: function( xhr, status ) {
@@ -125,6 +125,7 @@ $('body').on('click', '.unread a', function (event) {
             'object' : $(this).data('object')
         },
         success: function (data) {
+            currentElement.parent().children("span.vote-result").html(data.data);
         },
         error: function( xhr, status ) {
             //console.log(status);
@@ -134,3 +135,33 @@ $('body').on('click', '.unread a', function (event) {
         }
     });
 });
+
+
+$('#notificationsDropdownLink').on('click', function (event) {
+        event.preventDefault();
+        // $('#notifications-dropdown').toggle();
+
+        currentElement = $(this);
+        notificationList = currentElement.parent().children("#notificationsDropdownMenu").children("#notificationsList");
+
+        if(  !notificationList.is(':empty') ) {
+           return false;
+        }
+
+        $.ajax({
+        type: "POST",
+        url: baseUri + 'notification/getNotify',
+        dataType: 'json',
+
+        success: function (data) {
+            notificationList.html(data.data);
+            console.log(data);
+        },
+        error: function( xhr, status ) {
+        },
+        complete: function( xhr, status ) {
+        }
+    });
+
+
+    });
