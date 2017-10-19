@@ -41,6 +41,24 @@ class NotificationController extends ControllerBase
             )
         );
 
+        $notifies = ActivityNotifications::find(
+                    [
+                    'usersId = ?0',
+                    'bind' => [$usersId]
+                    ]
+                );
+
+        if ($notifies) {
+
+                foreach ($notifies as $notify) {
+                     $notify->setWasRead('Y');
+                        if (!$notify->save()) {
+                            $this->saveLogger($notify->getMessages());
+                        }
+                }
+            }
+
+
         $this->view->setVars(
             [
                 'notifications'       => $notifications

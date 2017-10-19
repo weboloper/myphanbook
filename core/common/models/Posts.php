@@ -900,6 +900,31 @@ class Posts extends ModelBase
     }
 
     /**
+     * Get value favorite this post
+     *
+     * @return number
+     */
+    public function postFavoriteCurrentUser()
+    {   
+        $usersId =$this->getDI()->get('auth')->getAuth()['id'];
+        
+        if (!$usersId) {
+            return false;
+        }
+        return $this->getpostFavoriter(
+
+                [
+                    'usersId = :usersId:',
+                    'bind' => [
+                        'usersId' => $usersId
+                    ]
+                ]
+
+            )->count();
+    }
+
+
+    /**
      * @return bool
      */
     public function isPublish()

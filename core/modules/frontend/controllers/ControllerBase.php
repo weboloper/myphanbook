@@ -162,7 +162,7 @@ class ControllerBase extends Controller
         if (!$vote) {
             $this->db->rollback();
             $this->jsonMessages['messages'][] = [
-                'type'    => 'error',
+                'type'    => 'danger',
                 'content' =>  'Vote have a problem :)'
             ];
             return $this->jsonMessages;

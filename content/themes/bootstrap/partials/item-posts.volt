@@ -15,10 +15,9 @@
         </div>
 
         <hr/>
-      
- 
+
         {% if single is defined %}
-            <a class="favoriter btn btn-danger float-right" data-object-id="{{ post.id }}" href="#">
+            <a class="favoriter btn {% if post.postFavoriteCurrentUser() %} btn-danger {% else %} btn-outline-danger {% endif %}  float-right" data-object-id="{{ post.id }}" href="#">
                 <i class="fa fa-heart"></i> {{ post.postFavorite() }}
             </a>
             {{ partial('partials/vote', ['objectId': post.id, 'object': 'posts']) }} 

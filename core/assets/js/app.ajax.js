@@ -83,12 +83,14 @@ $('body').on('click', '.favoriter', function (event){
             v = parseInt(v);
             if (data.messages[0].flag == 1) {
                 v = v + 1;
-                currentElement.addClass('favorited');
-                currentElement.html('<i class="fa fa-heart"></i>' + v);
-            } else{
+                currentElement.removeClass('btn-outline-danger');
+                currentElement.addClass('btn-danger');
+                currentElement.html('<i class="fa fa-heart"></i> ' + v);
+            } else if (data.messages[0].flag == 0){
                 v = v - 1;
-                currentElement.removeClass('favorited');
-                currentElement.html('<i class="fa fa-heart"></i>' + v );
+                currentElement.removeClass('btn-danger');
+                currentElement.addClass('btn-outline-danger');
+                currentElement.html('<i class="fa fa-heart"></i> ' + v );
             };
         },
         error: function( xhr, status ) {
@@ -154,8 +156,15 @@ $('#notificationsDropdownLink').on('click', function (event) {
         dataType: 'json',
 
         success: function (data) {
-            notificationList.html(data.data);
+
             console.log(data);
+
+            if(data.data == "" ) {
+                notificationList.html('<span class="dropdown-item">¯\\_(ツ)_/¯</span>');
+                return;
+            }
+            notificationList.html(data.data);
+             
         },
         error: function( xhr, status ) {
         },

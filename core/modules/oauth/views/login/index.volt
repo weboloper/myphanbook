@@ -15,8 +15,7 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
 
-            <div class="row">
-                <div class="col-xs-8">
+                 <div class=" form-group">
                   <div class="checkbox icheck">
                     <label>
                       {{ form.render('remember')}} {{ t('Remember Me') }}
@@ -24,11 +23,10 @@
                   </div>
                 </div>
 
-                <div class="col-xs-4">
+                <div class=" form-group">
                     {{ form.render('submit', ['class' : 'btn btn-primary btn-block btn-flat'])}}
                 </div>
-            </div>
-        {{ end_form() }}
+         {{ end_form() }}
 
         {{ partial('partials/social-login') }}
 

@@ -112,15 +112,13 @@ class ControllerBase extends Controller
     private function loadDefaultAssets()
     {
         $this->assets
-            ->addCss('core/assets/css/bootstrap.min.css')
+            ->addCss('css/theme.css')
             ->addCss('core/assets/css/font-awesome.min.css')
             ->addCss('oauth/assets/css/app.css')
-            ->addCss('core/assets/css/icheck/blue.css')
-        ;
+         ;
         $this->assets
             ->addJs('core/assets/js/jquery.js')
-            ->addJs('core/assets/js/icheck/icheck.min.js')
-            ->addJs('oauth/assets/js/app.js')
+             ->addJs('oauth/assets/js/app.js')
         ;
     }
 }

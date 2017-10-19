@@ -1,13 +1,11 @@
 {% if votes is defined %}
 <ul class="list-inline">
  
- 	<span class="btn btn-secondary  disabled vote-result">{{ vote_score(objectId, object) }}</span>
-     <a href="#" class="btn btn-secondary voter"  title="Like" data-way="positive" data-object-id="{{ objectId }}" data-object="{{ object }}">
+    <a href="#" class="btn btn-outline-secondary voter"  title="Like" data-way="positive" data-object-id="{{ objectId }}" data-object="{{ object }}">
         <i class="fa fa-thumbs-up"></i>
     </a>
- 
-
-     <a href="#" class="btn btn-secondary voter" role="button" aria-pressed="true" title="Dislike" data-way="negative" data-object-id="{{ objectId }}" data-object="{{ object }}"><i class="fa fa-thumbs-down"></i></a>
+    <a href="#" class="btn btn-outline-secondary voter" role="button" aria-pressed="true" title="Dislike" data-way="negative" data-object-id="{{ objectId }}" data-object="{{ object }}"><i class="fa fa-thumbs-down"></i></a>
+     <span class="btn btn-outline-secondary  disabled vote-result">{{ vote_score(objectId, object) }}</span>
  
 </ul>
 {% endif %}

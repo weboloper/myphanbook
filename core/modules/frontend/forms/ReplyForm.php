@@ -32,8 +32,7 @@ class ReplyForm extends Form
             'content',
             array(
             'placeholder' => t('Please be sure to answer the question. Provide details and share your research!'),
-            'class'       => 'wmdd-input',
-            'id'           => 'wmd-input',
+            'class'       => 'form-control',
             'required'    => true,
             'rows'  =>8
 

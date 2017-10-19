@@ -101,6 +101,50 @@ class SignupForm extends Form
         );
         $this->add($email);
 
+        // Password
+        $password = new Text(
+            'password',
+            [
+                'placeholder' => t('Password'),
+                'required' => 'true',
+                'autofocus' => 'true',
+                'class' => 'text-box'
+            ]
+        );
+        $password->addValidators(
+            [
+                new PresenceOf(
+                    [
+                        'message' => t('Password is required.')
+                    ]
+                )
+            ]
+        );
+        $this->add($password);
+
+        // User name
+        $passwordRepeat = new Text(
+            'passwordRepeat',
+            [
+                'placeholder' => t('Password (Repeat)'),
+                'required' => 'true',
+                'autofocus' => 'true',
+                'class' => 'text-box'
+            ]
+        );
+        $passwordRepeat->addValidators(
+            [
+                new PresenceOf(
+                    [
+                        'message' => t('passwordRepeat is required.')
+                    ]
+                )
+            ]
+        );
+        $this->add($passwordRepeat);
+
+
+
         // Remember me
         $terms = new Check(
             'terms',

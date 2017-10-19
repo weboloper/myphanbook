@@ -61,7 +61,7 @@
                     <div class="dropdown-divider"></div>
                     <div id="notificationsList"></div>
                     <div class="dropdown-divider"></div>
-                    <a href="/notifications" class="dropdown-item">{{ t('View all 🡪') }}</a>
+                    <a href="/notification" class="dropdown-item">{{ t('View all ') }} <i class="fa fa-arrow-right"></i></a>
                    
                 </div>
             </li>

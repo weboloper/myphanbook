@@ -40,7 +40,7 @@ class FavoriteController extends ControllerBase
         $post = Posts::findFirstById($this->request->getPost('objectId'));
         if (!$post) {
             $this->jsonMessages['messages'][] = [
-                'type'    => 'error',
+                'type'    => 'danger',
                 'content' => 'The Post does not exist'
             ];
             return $this->jsonMessages;
@@ -51,8 +51,8 @@ class FavoriteController extends ControllerBase
          */
         if (!$this->auth->isAuthorizedVisitor()) {
             $this->jsonMessages['messages'][] = [
-                'type'    => 'error',
-                'content' => 'You must log in first to subscribe post'
+                'type'    => 'danger',
+                'content' => 'You must log in first to favorite post'
             ];
 
             return $this->jsonMessages;
@@ -77,7 +77,7 @@ class FavoriteController extends ControllerBase
             }
             $this->jsonMessages['messages'][] = [
                 'type'    => 'info',
-                'content' => 'You have just subscribe post',
+                'content' => 'You have just favorited post',
                 'flag'    => 1
             ];
             return $this->jsonMessages;
@@ -85,13 +85,14 @@ class FavoriteController extends ControllerBase
             // unsubscribe posts
             if (!$subscription->delete()) {
                 foreach ($subscription->getMessages() as $message) {
-                    $this->logger->error('Unsubscribe delete false '. $message . __LINE__ .'and'. __CLASS__);
+                    $this->logger->error('Unfavorite delete false '. $message . __LINE__ .'and'. __CLASS__);
                 }
                 return false;
             }
             $this->jsonMessages['messages'][] = [
                 'type'    => 'info',
-                'content' => 'You have just unsubscribe post'
+                'content' => 'You have just unfavorited post',
+                'flag'    => 0
             ];
             return $this->jsonMessages;
         }

@@ -6,108 +6,54 @@
             <div class="col-md-9">
                 {{ partial('partials/item-posts', ['single' : true]) }}
 
-                <div class="share-tags page-content">
-                    <div class="question-tags"><i class="fa fa-tags"></i>
+                <div class="share-tahs">
+                    <div class="post-tags"> 
                     {% for modelTag in post.tag%}
-                        {{link_to('tags/' ~ modelTag.id ~ '/' ~ modelTag.slug, modelTag.name) }},
+                        {{link_to('tags/' ~ modelTag.id ~ '/' ~ modelTag.slug, modelTag.name , 'class': 'badge badge-secondary') }},
                     {% endfor %}
                     </div>
-                    <div class="share-inside-warp">
-                        <ul>
-                            <li>
-                                <a href="#" original-title="Facebook" cl>
-                                    <span class="icon_i">
-                                        <span class="icon_square" icon_size="20" span_bg="#3b5997" span_hover="#666">
-                                            <i i_color="#FFF" class="social_icon-facebook
-                                            fa fa-facebook"></i>
-                                        </span>
-                                    </span>
-                                </a>
-                                <a href="#" target="_blank">Facebook</a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <span class="icon_i">
-                                        <span class="icon_square" icon_size="20" span_bg="#00baf0" span_hover="#666">
-                                            <i i_color="#FFF" class="fa fa-twitter social_icon-twitter"></i>
-                                        </span>
-                                    </span>
-                                </a>
-                                <a target="_blank" href="#">Twitter</a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <span class="icon_i">
-                                        <span class="icon_square" icon_size="20" span_bg="#ca2c24" span_hover="#666">
-                                            <i i_color="#FFF" class="fa fa-google-plus social_icon-gplus"></i>
-                                        </span>
-                                    </span>
-                                </a>
-                                <a href="#" target="_blank">Google plus</a>
-                            </li>
-                            <li>
-                                <a target="_blank" href="#">
-                                    <span class="icon_i">
-                                        <span class="icon_square" icon_size="20" span_bg="#c7151a" span_hover="#666">
-                                            <i i_color="#FFF" class="icon pinterest fa fa-pinterest"></i>
-                                        </span>
-                                    </span>
-                                </a>
-                                <a href="#" target="_blank">Pinterest</a>
-                            </li>
-                        </ul>
-                        <span class="share-inside-f-arrow"></span>
-                        <span class="share-inside-l-arrow"></span>
-                    </div><!-- End share-inside-warp -->
-                    <div class="share-inside"><i class="fa fa-share-alt"></i>Share</div>
-                    <div class="clearfix"></div>
-                </div><!-- End share-tags -->
+            
+         
+                </div>  
 
-                <div class="about-author clearfix">
-                    <div class="author-image">
-                        <a href="/@{{ post.user.username }}" original-title="" class="tooltip-n">
-                        {{ image(getUrlAvatar(post.user.email)  ,false) }}
-                        </a>
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                    <div class="col-4 col-sm-2">
+                        <img   src="{{ getAvatarSrc(post.user.avatar) }}" class="img-thumbnail img-fluid">
                     </div>
-                    <div class="author-bio">
-                        <h4>About the Author</h4>
-                        {{ post.user.bio }}
+                    <div class="col-8 col-sm-10">
+                    <strong><a href="/@{{ post.user.username }}" original-title="" class="tooltip-n">
+                        {{ post.user.getUsername() }}
+                        </a></strong>
+                    <p class="card-text">{{ this.markdown.text(post.user.bio) }}</p>
                     </div>
-                </div><!-- End about-author -->
+                    </div>
+                  </div>
+                </div>
 
+ 
 
                 {% if comments|length > 0 %}
                 <div id="commentlist" class="page-content">
-                    <div class="boxedtitle page-title">
-                        <h2>Answers ( <span class="color">{{ comments|length }}</span> )</h2>
-                    </div>
-                    <ol class="commentlist clearfix">
+                
+                    <h2>Answers ( <span class="color">{{ comments|length }}</span> )</h2>
+                    <hr>
+                   
+                    <ol class="commentlist list-unstyled">
                         {% for comment in comments %}
-                        <li class="comment">
-                            <div class="comment-body clearfix">
-                                <div class="avatar">
-                                    {{ image(getUrlAvatar(comment.email), false) }}
-                                </div>
-                                <div class="comment-text">
-                                    <div class="author clearfix">
-                                        <div class="comment-author">
-                                            <a href="/@{{ comment.user.username }}">{{ comment.user.getFullName() }}</a>
-                                        </div>
-
-                                        {{ partial('partials/vote-reply', ['objectId' : comment.id, 'object' : 'comment', 'votes' : comment]) }}
-                                        <div class="comment-meta">
-                                            <div class="date"><i class="fa fa-time"></i>
-                                            {{ getHumanDate(comment.createdAt)  }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text"><p>{{ this.markdown.text(comment.content) }}</p>
-                                    </div>
-                                    {# Add class js for ajax#}
-                                    <div>
+                        <li class="comment media mb-4">
+                            <img class="d-flex mr-3 img-thumbnail img-fluid" src="{{ getAvatarSrc(comment.user.getAvatar()) }}" alt="">
+                            <div class="comment-body media-body">
                                 
-                                    </div>
-                                </div>
+                                {{ partial('partials/vote-reply', ['objectId' : comment.id, 'object' : 'comments', 'votes' : comment]) }}
+
+                                <h5 class="mt-0"><a href="/@{{ comment.user.username }}">{{ comment.user.getFullName() }}</a></h5>
+                                    
+                                {{ getHumanDate(comment.createdAt)  }}
+
+                                <div class="text"><p>{{ this.markdown.text(comment.content) }}</p></div>
+                                 
                             </div>
                         </li>
                         {% endfor %}
@@ -127,20 +73,12 @@
                             </p>
                         </div>
                         <p class="form-submit">
-                            <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
+                            <input name="submit" type="submit" id="submit" value="Post your answer" class="btn btn-primary">
                         </p>
                          {{ form.render('object', ['value': 'questions']) }}
                     </form>
                 </div>
-
-                <div class="post-next-prev clearfix">
-                    <p class="prev-post">
-                        <a href="#"><i class="fa fa-angle-double-left"></i>&nbsp;Prev question</a>
-                    </p>
-                    <p class="next-post">
-                        <a href="#">Next question&nbsp;<i class="fa fa-angle-double-right"></i></a>
-                    </p>
-                </div><!-- End post-next-prev -->
+ 
             </div><!-- End main -->
             <aside class="col-md-3 sidebar">
             {{ partial('partials/right-side') }}
