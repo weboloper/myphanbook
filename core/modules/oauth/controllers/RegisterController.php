@@ -171,7 +171,7 @@ class RegisterController extends ControllerBase
 
         if ($this->request->isPost()) {
             $user = new Users();
-            $form->bind($this->request->getPost(), $user, ['firstname', 'lastname', 'email', 'username']);
+            $form->bind($this->request->getPost(), $user, ['firstname', 'lastname', 'email', 'username', 'passwd']);
 
             if (!$form->isValid()) {
                 foreach ($form->getMessages() as $message) {

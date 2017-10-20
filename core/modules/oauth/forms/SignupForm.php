@@ -14,10 +14,13 @@ namespace Phanbook\Oauth\Forms;
 
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Submit;
+use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Confirmation;
+use Phalcon\Validation\Validator\StringLength;
 
 class SignupForm extends Form
 {
@@ -101,47 +104,62 @@ class SignupForm extends Form
         );
         $this->add($email);
 
-        // Password
-        $password = new Text(
-            'password',
-            [
-                'placeholder' => t('Password'),
-                'required' => 'true',
-                'autofocus' => 'true',
-                'class' => 'text-box'
-            ]
+        //New password
+        $passwd = new Password(
+            'passwd',
+            array(
+            'placeholder'  => t('New password'),
+            'class'        => 'form-control',
+            'autocomplete' => 'off'
+            )
         );
-        $password->addValidators(
-            [
-                new PresenceOf(
-                    [
-                        'message' => t('Password is required.')
-                    ]
-                )
-            ]
-        );
-        $this->add($password);
 
-        // User name
-        $passwordRepeat = new Text(
-            'passwordRepeat',
-            [
-                'placeholder' => t('Password (Repeat)'),
-                'required' => 'true',
-                'autofocus' => 'true',
-                'class' => 'text-box'
-            ]
-        );
-        $passwordRepeat->addValidators(
-            [
+        $passwd->addValidators(
+            array(
                 new PresenceOf(
-                    [
-                        'message' => t('passwordRepeat is required.')
-                    ]
+                    array(
+                    'message' => t('Password is required')
+                    )
+                ),
+                new StringLength(
+                    array(
+                    'min'            => 5,
+                    'messageMinimum' => t('Password is too short. Minimum 5 characters')
+                    )
+                ),
+                new Confirmation(
+                    array(
+                    'message' => t("Password doesn't match confirmation"),
+                    'with'    => 'passwd_confirm'
+                    )
                 )
-            ]
+            )
         );
-        $this->add($passwordRepeat);
+
+        $this->add($passwd);
+
+        //Confirm New Password
+        $passwdConfirm = new Password(
+            'passwd_confirm',
+            array(
+            'placeholder'  => t('Confirm new password'),
+            'class'        => 'form-control',
+            'autocomplete' => 'off'
+            )
+        );
+
+        $passwdConfirm->addValidator(
+            new PresenceOf(
+                array(
+                'message' => t('The confirmation password is required')
+                )
+            )
+        );
+
+        $this->add($passwdConfirm);
+
+
+
 
 
 

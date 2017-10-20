@@ -32,12 +32,12 @@ return [
         /**
          * The site name, you should change it to your name website
          */
-        'name' => 'Phanbook',
+        'name' => 'myApp',
 
         /**
          * In a few words, explain what this site is about.
          */
-        'tagline'   => 'A Q&A, Discussion PHP platform',
+        'tagline'   => 'myApp description line',
         'publicUrl' => env('APP_URL'),
 
         /**

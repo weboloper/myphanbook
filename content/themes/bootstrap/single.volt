@@ -6,14 +6,12 @@
             <div class="col-md-9">
                 {{ partial('partials/item-posts', ['single' : true]) }}
 
-                <div class="share-tahs">
+                <div class="share-tahs mb-2">
                     <div class="post-tags"> 
                     {% for modelTag in post.tag%}
-                        {{link_to('tags/' ~ modelTag.id ~ '/' ~ modelTag.slug, modelTag.name , 'class': 'badge badge-secondary') }},
+                        {{link_to('tags/' ~ modelTag.id ~ '/' ~ modelTag.slug, modelTag.name , 'class': 'badge badge-secondary') }} 
                     {% endfor %}
                     </div>
-            
-         
                 </div>  
 
                 <div class="card mb-3">
