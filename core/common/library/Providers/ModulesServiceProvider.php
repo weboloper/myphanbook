@@ -19,6 +19,7 @@ use Phanbook\Oauth\Module as oAuth;
 use Phanbook\Error\Module as Error;
 use Phanbook\Backend\Module as Backend;
 use Phanbook\Frontend\Module as Frontend;
+use Phanbook\Api\Module as Api;
 use Phalcon\Cli\Console as ConsoleApplication;
 use Phalcon\Mvc\Application as MvcApplication;
 
@@ -82,6 +83,11 @@ class ModulesServiceProvider extends AbstractServiceProvider
                 'className' => Backend::class,
                 'path'      => modules_path('backend/Module.php'),
                 'router'    => modules_path('backend/config/routing.php'),
+            ],
+            'api' => [
+                'className' => Api::class,
+                'path'      => modules_path('api/Module.php'),
+                'router'    => modules_path('api/config/routing.php')
             ],
             'cli' => [
                 'className' => Cli::class,
