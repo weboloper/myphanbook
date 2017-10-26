@@ -302,7 +302,8 @@ class User extends Service
 
         $defaults = [
             'registerHash' => $registerHash,
-            'passwd'       => $this->security->hash($this->random->base58()),
+            // 'passwd'       => $this->security->hash($this->random->base58()),
+            'passwd'       => $this->security->hash($entity->passwd),
             'status'       => Users::STATUS_PENDING,
             'gender'       => Users::GENDER_UNKNOWN,
         ];

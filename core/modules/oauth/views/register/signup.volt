@@ -24,11 +24,11 @@
              </div>
 
              <div class="form-group has-feedback">
-                {{ form.render('password', ['class' : 'form-control']) }}
+                {{ form.render('passwd', ['class' : 'form-control']) }}
              </div>
 
               <div class="form-group has-feedback">
-                {{ form.render('passwordRepeat', ['class' : 'form-control']) }}
+                {{ form.render('passwd_confirm', ['class' : 'form-control']) }}
              </div>
              
              <div class="form-group">
