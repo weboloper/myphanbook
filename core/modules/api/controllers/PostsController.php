@@ -52,19 +52,19 @@ class PostsController extends ControllerBase
         }
 
         $this->response->setStatusCode(200, "OK");
-        return $this->response->setJsonContent([$post, $post->getUser()]);
+        return $this->response->setJsonContent( $post );
 
     }
 
 
     public function postCommentsAction($id)
     {
-    	$post = $this->postService->findFirstById($id);
-    	if (!$post || !$this->postService->isPublished($post)) {
-            $this->response->setStatusCode(404, 'Not Found');
-            return;
-        }
-
+    	// $post = $this->postService->findFirstById($id);
+    	// if (!$post || !$this->postService->isPublished($post)) {
+     //        $this->response->setStatusCode(404, 'Not Found');
+     //        return;
+     //    }
+    	$post = new Posts();
     	$comments = $post->getCommentsWithVotes($id);
 
     	$this->response->setStatusCode(200, "OK");
