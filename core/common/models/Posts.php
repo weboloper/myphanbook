@@ -873,7 +873,7 @@ class Posts extends ModelBase
     public static function postRelated($post)
     {   
 
-        return null;
+       
 
         $indexer = new Indexer();
         $posts = $indexer->search(

@@ -366,6 +366,8 @@ class PostsController extends ControllerBase
             ]
         );
 
+        // die(var_dump(Posts::postRelated($post)));
+
         $this->tag->setTitle($this->escaper->escapeHtml($post->getTitle()));
 
         $this->view->pick('single');
